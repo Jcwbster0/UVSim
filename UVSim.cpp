@@ -39,19 +39,27 @@ void store(string memoryList[], int address, int accumulator) { // 21
 }
 
 // ARITHMETIC OPERATION
-int add() { // 30
+int add(int &accumulator, string memoryList[], int targetAddress) {// 30
+    int memoryValue = load(memoryList, targetAddress);
+    accumulator += memoryValue;
     return 0;
 }
 
-int substract() { // 31
+int subtract(int &accumulator, string memoryList[],int targetAddress) { // 31
+    int memoryValue = load(memoryList, targetAddress);
+    accumulator -= memoryValue;
     return 0;
 }
 
-int divide() { // 32
+int divide(int &accumulator, string memoryList[], int targetAddress) { // 32
+    int memoryValue = load(memoryList, targetAddress);
+    accumulator /= memoryValue;
     return 0;
 }
 
-int multiply() { // 33
+int multiply(int &accumulator, string memoryList[], int targetAddress) { // 33
+    int memoryValue = load(memoryList, targetAddress);
+    accumulator *= memoryValue;
     return 0;
 }
 
@@ -113,7 +121,7 @@ int main() {
         if (line.empty()) {
             continue;
         }
-        //this conditional check strip the carriage return operator for windows compiling on mac or linux
+        //this conditional check strips the carriage return operator for windows compiling on mac or linux
         if (line.back() == '\r') {
             line.pop_back();
         }
@@ -189,16 +197,16 @@ int main() {
             store(memory, addressInt, accumulator);
             break;
         case 30: // Add
-
+            accumulator = add(accumulator, memory, addressInt);
             break;
         case 31: // Subtract
-
+            accumulator = subtract(accumulator, memory, addressInt);
             break;
         case 32: // Divide
-
+            accumulator = divide(accumulator, memory, addressInt);
             break;
         case 33: // Multiply
-
+            accumulator = multiply(accumulator, memory, addressInt);
             break;
         case 40: // Branch
             branchSuccessful = branch(currentInstruction, addressInt);
@@ -209,7 +217,7 @@ int main() {
         case 42: // Branch if Zero
             branchSuccessful = branchzero(currentInstruction, addressInt, accumulator);
             break;
-        case 43: // Halt (No need for a seperatre function, just need to break the loop)
+        case 43: // Halt (No need for a separator function, just need to break the loop)
             cout << "Ending Program..." << endl;
             stop = true;
             break;
