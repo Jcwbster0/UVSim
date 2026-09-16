@@ -197,16 +197,16 @@ int main() {
             store(memory, addressInt, accumulator);
             break;
         case 30: // Add
-            accumulator = add(accumulator, memory, addressInt);
+            add(accumulator, memory, addressInt);
             break;
         case 31: // Subtract
-            accumulator = subtract(accumulator, memory, addressInt);
+            subtract(accumulator, memory, addressInt);
             break;
         case 32: // Divide
-            accumulator = divide(accumulator, memory, addressInt);
+            divide(accumulator, memory, addressInt);
             break;
         case 33: // Multiply
-            accumulator = multiply(accumulator, memory, addressInt);
+            multiply(accumulator, memory, addressInt);
             break;
         case 40: // Branch
             branchSuccessful = branch(currentInstruction, addressInt);
