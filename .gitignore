@@ -7,3 +7,6 @@ run_tests
 
 # Ignore Mac system clutter files
 .DS_Store 
+
+#Ignore .txt test files
+.txt
