@@ -1,0 +1,9 @@
+# Ignore the specific compiled binaries we made
+run_tests
+
+# Ignore any alternative compiled executable files (Mac/Linux binaries usually have no extension)
+*.out
+*.exe
+
+# Ignore Mac system clutter files
+.DS_Store 
