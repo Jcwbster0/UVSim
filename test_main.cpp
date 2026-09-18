@@ -2,6 +2,7 @@
 #include <catch2/catch_test_macros.hpp>
 // #include "catch.hpp"
 #include "UVSim.hpp"
+#include <iostream>
 
 using namespace std;
 
@@ -111,7 +112,7 @@ TEST_CASE("UVSim Arithmetic Operations Work Correctly", "[arithmetic]") {
             REQUIRE(accumulator == 20);  // 5 * 4 = 20
         }
         SECTION("Multiplication(33) by negative numbers") {
-            memory[10] = "0004";
+            memory[10] = "-0004";
             int accumulator = -5;
 
             multiply(accumulator, memory, 10);
@@ -139,5 +140,97 @@ TEST_CASE("UVSim Arithmetic Operations Work Correctly", "[arithmetic]") {
             REQUIRE(result == -1);      // Should return error code
             REQUIRE(accumulator == 10); // Accumulator should remain unchanged
         }
+    }
+}
+
+TEST_CASE("I/O Operations Work Correctly", "[I/O]") {
+    string memory[100];
+    for (int i = 0; i < 100; i++) {
+        memory[i] = "+0000";
+    }
+    // Read Tests
+    SECTION("Read stores a positive number") {
+        istringstream input("1515");
+        auto* oldCin = cin.rdbuf(input.rdbuf());
+
+        read(memory, 10);
+
+        cin.rdbuf(oldCin);
+
+        REQUIRE(memory[10] == "+1515");
+    }
+
+    SECTION("Read stores a negative number") {
+        istringstream input("-1515");
+        auto* oldCin = cin.rdbuf(input.rdbuf());
+
+        read(memory, 10);
+
+        cin.rdbuf(oldCin);
+
+        REQUIRE(memory[10] == "-1515");
+    }
+
+    // Write Tests
+    SECTION("Write displays a positive number") {
+        memory[10] = "+1515";
+
+        ostringstream output;
+        auto* oldCout = cout.rdbuf(output.rdbuf());
+
+        write(memory, 10);
+
+        cout.rdbuf(oldCout);
+
+        REQUIRE(output.str() == "Content in address 10: +1515\n");
+    }
+
+
+    SECTION("Write displays a negative number") {
+        memory[10] = "-1515";
+
+        ostringstream output;
+        auto* oldCout = cout.rdbuf(output.rdbuf());
+
+        write(memory, 10);
+
+        cout.rdbuf(oldCout);
+
+        REQUIRE(output.str() == "Content in address 10: -1515\n");
+    }
+
+
+    // Load Tests
+    SECTION("Load retrieves a positive value from memory") {
+        memory[10] = "+0015";
+
+        int result = load(memory, 10);
+
+        REQUIRE(result == 15);
+    }
+    
+    SECTION("Load retrieves a negative value from memory") {
+        memory[10] = "-0015";
+
+        int result = load(memory, 10);
+
+        REQUIRE(result == -15);
+    }
+
+    // Store Tests
+    SECTION("Store saves a positive value from the accumulator to memory") {
+        int accumulator = 15;
+
+        store(memory, 10, accumulator);
+
+        REQUIRE(memory[10] == "+0015");
+    }
+
+    SECTION("Store saves a negative value from the accumulator to memory") {
+        int accumulator = -15;
+
+        store(memory, 10, accumulator);
+
+        REQUIRE(memory[10] == "-0015");
     }
 }
