@@ -15,13 +15,24 @@ bool is_txt_file(const string& filename) {
 // I/O OPERATION
 void read(string memoryList[], int address) { // 10
     int userInput;
+    string userString;
     cout << "Please enter up to a 4 digit number: ";
     while (!(cin >> userInput) || userInput > 9999 || userInput < -9999) {  // Keep asking until the user enters a valid number
         cout << "Invalid input. Try again: ";
         cin.clear(); // Reset input errors
         cin.ignore(10000, '\n'); // Remove bad input
+   }
+    userString = to_string(userInput);
+    if (userString.length() == 4) {
+        userString.insert(0,"+");
+    } else if (userString.length() == 3){
+        userString.insert(0, "+0");
+    } else if (userString.length() == 2) {
+        userString.insert(0, "+00");
+    } else if (userString.length() == 1){
+       userString.insert(0, "+000"); 
     }
-    memoryList[address] = to_string(userInput);
+    memoryList[address] = userString;
 }
 
 void write(string memoryList[], int address) { // 11
@@ -36,7 +47,18 @@ int load(string memoryList[], int address) { // 20
 }
 
 void store(string memoryList[], int address, int accumulator) { // 21
-    memoryList[address] = to_string(accumulator);
+    string userString;
+    userString  = to_string(accumulator);
+    if (userString.length() == 4) {
+        userString.insert(0,"+");
+    } else if (userString.length() == 3){
+        userString.insert(0, "+0");
+    } else if (userString.length() == 2) {
+        userString.insert(0, "+00");
+    } else if (userString.length() == 1){
+       userString.insert(0, "+000"); 
+    }
+    memoryList[address] = userString;
 }
 
 // ARITHMETIC OPERATION
