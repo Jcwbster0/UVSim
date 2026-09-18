@@ -13,3 +13,5 @@ cmake_install.cmake
 .vs/
 *.vcxproj*
 *.sln
+
+.DS_Store
