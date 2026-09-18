@@ -22,6 +22,18 @@ executing machine language programs written in BasicML.
 ## PREREQUISITES & COMPILATION
 Included is a compiled executable for unix systems (UVSim) and windows (UVSim.exe)
 
+FOR WINDOWS:
+
+    From the Command Prompt enter the path to the .exe file and press enter, for example:
+    
+    C:\Users\windowsuser>H:\UVSim.exe
+    Enter the name of your input file: H:test_programs\Test1.txt
+    File reading successful!
+    Please enter up to a 4 digit number: 9999
+    Please enter up to a 4 digit number: 9999
+    Content in address 9: +9999
+    Ending Program...
+
 This version of UVSim is built using C++. To compile and execute this project, 
 ensure you have a standard C++ compiler installed on your system.
 
