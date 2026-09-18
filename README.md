@@ -108,6 +108,7 @@ It safely flags and terminates on the following structural issues:
 * Input files exceeding the strict 100-word memory limit
 * Missing critical HALT (+43XX) instructions required for execution initialization
 * File type mismatch (ensures .txt structure)
+* Accumulator overflow is handled by clipping values above +9999 or below -9999
 
 
 
