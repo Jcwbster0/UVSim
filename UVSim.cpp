@@ -22,17 +22,27 @@ void read(string memoryList[], int address) { // 10
         cin.clear(); // Reset input errors
         cin.ignore(10000, '\n'); // Remove bad input
    }
-    userString = to_string(userInput);
-    if (userString.length() == 4) {
-        userString.insert(0,"+");
-    } else if (userString.length() == 3){
-        userString.insert(0, "+0");
-    } else if (userString.length() == 2) {
-        userString.insert(0, "+00");
-    } else if (userString.length() == 1){
-       userString.insert(0, "+000"); 
-    }
-    memoryList[address] = userString;
+   userString = to_string(userInput);
+   if (userInput >=0) {
+        if (userString.length() == 4) {
+            userString.insert(0,"+");
+        } else if (userString.length() == 3){
+            userString.insert(0, "+0");
+        } else if (userString.length() == 2) {
+            userString.insert(0, "+00");
+        } else if (userString.length() == 1){
+            userString.insert(0, "+000"); 
+        }
+   } else if (userInput < 0) {
+       if (userString.length() == 4) { 
+           userString.insert(1, "0");
+       } else if (userString.length() == 3) {
+           userString.insert(1, "00");
+       } else if (userString.length() == 2) {
+           userString.insert(1, "000");
+       }
+   }
+   memoryList[address] = userString;
 }
 
 void write(string memoryList[], int address) { // 11
@@ -49,15 +59,25 @@ int load(string memoryList[], int address) { // 20
 void store(string memoryList[], int address, int accumulator) { // 21
     string userString;
     userString  = to_string(accumulator);
-    if (userString.length() == 4) {
-        userString.insert(0,"+");
-    } else if (userString.length() == 3){
-        userString.insert(0, "+0");
-    } else if (userString.length() == 2) {
-        userString.insert(0, "+00");
-    } else if (userString.length() == 1){
-       userString.insert(0, "+000"); 
-    }
+   if (accumulator >=0) {
+        if (userString.length() == 4) {
+            userString.insert(0,"+");
+        } else if (userString.length() == 3){
+            userString.insert(0, "+0");
+        } else if (userString.length() == 2) {
+            userString.insert(0, "+00");
+        } else if (userString.length() == 1){
+            userString.insert(0, "+000"); 
+        }
+   } else if (accumulator < 0) {
+       if (userString.length() == 4) { 
+           userString.insert(1, "0");
+       } else if (userString.length() == 3) {
+           userString.insert(1, "00");
+       } else if (userString.length() == 2) {
+           userString.insert(1, "000");
+       }
+   }
     memoryList[address] = userString;
 }
 
