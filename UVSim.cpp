@@ -85,12 +85,24 @@ void store(string memoryList[], int address, int accumulator) { // 21
 int add(int &accumulator, string memoryList[], int targetAddress) {// 30
     int memoryValue = load(memoryList, targetAddress);
     accumulator += memoryValue;
+    if (accumulator > 9999) {
+        accumulator = 9999;
+    }
+    if (accumulator < -9999) {
+        accumulator = -9999;
+    }
     return 0;
 }
 
 int subtract(int &accumulator, string memoryList[],int targetAddress) { // 31
     int memoryValue = load(memoryList, targetAddress);
     accumulator -= memoryValue;
+    if (accumulator > 9999) {
+        accumulator = 9999;
+    }
+    if (accumulator < -9999) {
+        accumulator = -9999;
+    }
     return 0;
 }
 
@@ -101,12 +113,24 @@ int divide(int &accumulator, string memoryList[], int targetAddress) {
         return -1;  // Error code
     }
     accumulator /= memoryValue;
+    if (accumulator > 9999) {
+        accumulator = 9999;
+    }
+    if (accumulator < -9999) {
+        accumulator = -9999;
+    }
     return 0;
 }
 
 int multiply(int &accumulator, string memoryList[], int targetAddress) { // 33
     int memoryValue = load(memoryList, targetAddress);
     accumulator *= memoryValue;
+    if (accumulator > 9999) {
+        accumulator = 9999;
+    }
+    if (accumulator < -9999) {
+        accumulator = -9999;
+    }
     return 0;
 }
 
@@ -275,7 +299,6 @@ int main() {
             currentInstruction += 1;
         }
     }
-
     return 0;
 }
 #endif
