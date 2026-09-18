@@ -1,12 +1,15 @@
-# Ignore the specific compiled binaries we made
-run_tests
+# CMake
+cmake-build-*/
+build/
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+*.cmake
 
-# Ignore any alternative compiled executable files (Mac/Linux binaries usually have no extension)
-*.out
-*.exe
-
-# Ignore Mac system clutter files
-.DS_Store 
-
-#Ignore .txt test files
-.txt
+# IDEs
+.idea/
+.vscode/
+.vs/
+*.vcxproj*
+*.sln

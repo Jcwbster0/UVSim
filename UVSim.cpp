@@ -74,8 +74,12 @@ int subtract(int &accumulator, string memoryList[],int targetAddress) { // 31
     return 0;
 }
 
-int divide(int &accumulator, string memoryList[], int targetAddress) { // 32
+int divide(int &accumulator, string memoryList[], int targetAddress) {
     int memoryValue = load(memoryList, targetAddress);
+    if (memoryValue == 0) {
+        cerr << "Error: Division by zero!" << endl;
+        return -1;  // Error code
+    }
     accumulator /= memoryValue;
     return 0;
 }
@@ -110,6 +114,7 @@ bool branchzero(int& currAddress, int targetAddress, int accumulator) { // 42
 
 // MAIN FUNCTION -----------------------------------------------------------------------------------------
 // Handles opening the file, inputting its contents into an array, and interpreting given instructions
+#ifndef UVSIM_NO_MAIN //removes compiling confusion about 2 mains
 int main() {
     string memory[100];
     for (int i =0; i < 100; i++) {
@@ -253,3 +258,4 @@ int main() {
 
     return 0;
 }
+#endif
