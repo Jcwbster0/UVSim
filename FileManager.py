@@ -30,13 +30,9 @@ class FileManager:
         if len(lines) > 100:
             return 3
         for line in lines:
-            print(f"{type(line)}")
-            print(f"{len(line)}, {line[0]}, {line[1]}")
             if  len(line) != 5: 
-                print("fail in len")
                 return 2 
             if line[0] != '+' and line[0] != '-':
-                print("fail in sign")
                 return 2
             if "43" in line[1:3]:
                 includes_halt = True  

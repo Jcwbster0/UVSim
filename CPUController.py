@@ -28,7 +28,6 @@ class CPUController:
                     self.pushToOutput(fileOutputFrame, f"Input Accepted: {userInput}\n")
                     
                     self.currentInput = userInput
-                    print(self.currentInput)
                     #self.cpu.execute()
                 else:
                     raise ValueError
