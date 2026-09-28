@@ -32,6 +32,16 @@ class UserInputFrame(ttk.Frame):
     def openFileButtonPressed(self):
         
         path = self.parent.controller.handleOpenFile()
-        filename = os.path.basename(path)
-        self.currentFileLabel.config(text = f"{filename}")
 
+        if path[-4:] == ".txt":
+           labelText = os.path.basename(path)
+        else:
+            labelText = path
+
+        self.currentFileLabel.config(text = f"{labelText}")
+
+    def runProgramButtonPressed(self):
+        self.parent.controller.handleRunProgram()
+
+    def userInputButtonPressed(self):
+        self.parent.controller.handleUserInput()
