@@ -9,27 +9,33 @@ class FileManager:
     def openFile(self):
         filePath = self.promptForFile()
         defaultLines = []
-        if not filePath:
-            return (defaultLines,  "Unable to Read File")
+        if not filePath or if filePath[-4:] != ".txt":
+            return (defaultLines,  "Error: .txt file expected")
 
         with open(filePath, "r") as file:
             lines = file.readlines()
-            lines, errCode = validateFile(lines)
+            errCode = validateFile(lines)
             switch errCode:
-                case 0: return (lines,filePath)
-                case 1: return (defaultLines,"Error: .txt file expected")
+                case 0: return (lines,os.path.basename(filePath))
+                case 1: return (defaultLines,"Error: no HALT(43) code")
                 case 2: return (defaultLines, "Error: invalid opcode")
                 case 3: return (defaultLines, "Error: memory exceeded 100 words.")
-                case 4: return ()
 
     def promptForFile(self):
        filePath = filedialog.askopenfilename(title="Choose a File", filetypes = [("Text Files", "*.txt")])
        return filePath
     
-    def validate_file(filePath):
-        if not filePath.endswith(".txt"): return (False, 1)
-            #needs to check for 
-            #no halt code, incorrect length, incorrect input/opcodes
-
-    #validate file
-        return True
+    def validate_file(lines):
+        includes_halt = False
+        if len(lines) > 100:
+            return 3
+        for line in (lines):
+            if len(line) < 5 or len(line) > 5 : 
+                return 2 
+            if line[0] != '+' or line[0] != '-':
+                return 2
+            if "43" in line[1:3]:
+                includes_halt = True  
+        if includes_halt == false:
+            return 1
+        return 0 
