@@ -18,7 +18,7 @@ class MainWindow(tk.Tk):
        #initialize ui widgets here
         
        self.userInputFrame = UserInputFrame.UserInputFrame(self) 
-       self.FileOutputFrame = FileOutputFrame.FileOutputFrame(self)
+       self.fileOutputFrame = FileOutputFrame.FileOutputFrame(self)
        
 
        

@@ -9,13 +9,13 @@ class FileManager:
     def openFile(self):
         filePath = self.promptForFile()
         defaultLines = []
-        if not filePath or if filePath[-4:] != ".txt":
+        if not filePath or filePath[-4:] != ".txt":
             return (defaultLines,  "Error: .txt file expected")
 
         with open(filePath, "r") as file:
             lines = file.readlines()
-            errCode = validateFile(lines)
-            switch errCode:
+            errCode = self.validateFile(lines)
+            match errCode:
                 case 0: return (lines,os.path.basename(filePath))
                 case 1: return (defaultLines,"Error: no HALT(43) code")
                 case 2: return (defaultLines, "Error: invalid opcode")
@@ -25,7 +25,7 @@ class FileManager:
        filePath = filedialog.askopenfilename(title="Choose a File", filetypes = [("Text Files", "*.txt")])
        return filePath
     
-    def validate_file(lines):
+    def validateFile(self, lines):
         includes_halt = False
         if len(lines) > 100:
             return 3

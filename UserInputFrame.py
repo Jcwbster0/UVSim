@@ -8,26 +8,22 @@ class UserInputFrame(ttk.Frame):
         super().__init__(parent)
         self.parent = parent
 
-        runProgramCommand = parent.controller.runProgramButtonPressed
-        userInputCommand = parent.controller.userInputButtonPressed
-
-        userInputButton = ttk.Button(self, text = "Accept Input", command = userInputCommand)
+        userInputButton = ttk.Button(self, text = "Accept Input", command = self.userInputButtonPressed)
         openFileButton = ttk.Button(self, text = "Open File",command = self.openFileButtonPressed)
-        userInputEntry = ttk.Entry(self)
-        runProgramButton = ttk.Button(self, text = "Run Program", command = runProgramCommand)
+        self.userInputEntry = ttk.Entry(self)
+        runProgramButton = ttk.Button(self, text = "Run Program", command = self.runProgramButtonPressed)
         self.currentFileLabel = ttk.Label(self, text = "No File Selected.")
-
 
         self.columnconfigure((0,1,2,3), weight = 1, uniform = 'a')
         self.rowconfigure((0,1), weight = 1, uniform = 'a')
          
         userInputButton.grid(row = 0, column = 3, sticky = 'e')
         openFileButton.grid(row = 0, column = 0, sticky = 'w')
-        userInputEntry.grid(row = 0, column = 1,columnspan = 2, sticky = 'ns')
+        self.userInputEntry.grid(row = 0, column = 1,columnspan = 2, sticky = 'ns')
         runProgramButton.grid(row = 1, column = 3, sticky = "se")
         self.currentFileLabel.grid(row = 1, column = 0, columnspan = 3,sticky = "sw")
         self.pack(pady = (10,0))
-        userInputEntry.insert(0, "enter input here...")
+        self.userInputEntry.insert(0, "enter input here...")
         
     def openFileButtonPressed(self):
         labelText = self.parent.controller.handleOpenFile()
@@ -37,4 +33,5 @@ class UserInputFrame(ttk.Frame):
         self.parent.controller.handleRunProgram()
 
     def userInputButtonPressed(self):
-        self.parent.controller.handleUserInput()
+        userInput = self.userInputEntry.get()
+        self.parent.controller.handleUserInput(userInput, self.parent.fileOutputFrame.outputFrame)
