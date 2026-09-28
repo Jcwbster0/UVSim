@@ -13,7 +13,7 @@ class FileManager:
             return (defaultLines,  "Error: .txt file expected")
 
         with open(filePath, "r") as file:
-            lines = file.readlines()
+            lines = [line.rstrip("\n")for line in file.readlines()]
             errCode = self.validateFile(lines)
             match errCode:
                 case 0: return (lines,os.path.basename(filePath))
@@ -29,13 +29,17 @@ class FileManager:
         includes_halt = False
         if len(lines) > 100:
             return 3
-        for line in (lines):
-            if len(line) < 5 or len(line) > 5 : 
+        for line in lines:
+            print(f"{type(line)}")
+            print(f"{len(line)}, {line[0]}, {line[1]}")
+            if  len(line) != 5: 
+                print("fail in len")
                 return 2 
-            if line[0] != '+' or line[0] != '-':
+            if line[0] != '+' and line[0] != '-':
+                print("fail in sign")
                 return 2
             if "43" in line[1:3]:
                 includes_halt = True  
-        if includes_halt == false:
+        if includes_halt == False:
             return 1
         return 0 

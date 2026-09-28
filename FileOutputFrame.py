@@ -20,4 +20,8 @@ class FileOutputFrame(ttk.Frame):
         self.pack(fill = "both", expand = True)
         
 
+    def normalState(self):
+        self.outputFrame.config(state="normal")
 
+    def disabledState(self):
+        self.outputFrame.config(state="disabled")

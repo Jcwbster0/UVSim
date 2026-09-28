@@ -13,6 +13,7 @@ cmake_install.cmake
 .vs/
 *.vcxproj*
 *.sln
+*.swp
 
 .DS_Store
 __pycache__/
