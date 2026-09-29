@@ -34,4 +34,4 @@ class UserInputFrame(ttk.Frame):
 
     def userInputButtonPressed(self):
         userInput = self.userInputEntry.get()
-        self.parent.controller.handleUserInput(userInput, self.parent.fileOutputFrame)
+        self.parent.controller.handleUserInput(userInput)

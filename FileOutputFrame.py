@@ -19,7 +19,11 @@ class FileOutputFrame(ttk.Frame):
         scrollBar.pack(side = "right", fill = "y", expand = True)
         self.pack(fill = "both", expand = True)
         
-
+    def pushToOutput(self, msg):
+        self.normalState()
+        self.outputFrame.insert(tk.END, msg)
+        self.disabledState()
+        
     def normalState(self):
         self.outputFrame.config(state="normal")
 

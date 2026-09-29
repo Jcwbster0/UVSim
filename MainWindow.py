@@ -13,6 +13,7 @@ class MainWindow(tk.Tk):
        self.title = title
        self.controller = controller
 
+
        #Disable resizing
        self.resizable(False, False)
        #initialize ui widgets here
@@ -20,8 +21,7 @@ class MainWindow(tk.Tk):
        self.userInputFrame = UserInputFrame.UserInputFrame(self) 
        self.fileOutputFrame = FileOutputFrame.FileOutputFrame(self)
        
-
-       
+       self.controller.setup(self.fileOutputFrame)
        
        self.mainloop()
         
