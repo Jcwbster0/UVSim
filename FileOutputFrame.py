@@ -20,8 +20,10 @@ class FileOutputFrame(ttk.Frame):
         self.pack(fill = "both", expand = True)
         
     def pushToOutput(self, msg):
+        msg = "\n" + msg
         self.normalState()
         self.outputFrame.insert(tk.END, msg)
+        self.outputFrame.see(tk.END)
         self.disabledState()
         
     def normalState(self):

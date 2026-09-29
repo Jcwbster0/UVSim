@@ -14,13 +14,13 @@ class CPUController:
     def handleOpenFile(self):
         lines, labelText = self.fileManager.openFile()
         length = len(lines)
+        self.resetMemory()
         self.memory = lines + self.memory[length:]
-        print(self.memory)
-        self.cpu.resetProgramCounter()
         return labelText
     
     def handleRunProgram(self, userInput = None):
         outputMsg = self.cpu.execute(self, userInput = userInput)
+        print(outputMsg)
         if outputMsg is not None:
             self.pushToOutput(outputMsg)
 
@@ -52,9 +52,27 @@ class CPUController:
         for i in range(100):
             self.memory.append("+0000")
 
+    def resetMemory(self):
+        self.cpu.reset()
+        self.memory = []
+        self.setupMemory()
+
     def setup(self, fileOutputFrame):
         self.setupOutput(fileOutputFrame)
         self.setupMemory()
+        self.startupMessage()
 
     def pushToOutput(self, msg):
         self.output.pushToOutput(msg)
+
+    def startupMessage(self):
+        message = r"""              __ _
+ /\ /\/\   /\/ _(_)_ __ ___
+/ / \ \ \ / /\ \| | '_ ` _ \
+\ \_/ /\ V / _\ \ | | | | | |
+ \___/  \_/  \__/_|_| |_| |_|"""
+        message2 = "\n-----------------------------\n The Student Cpu Simulator\n-----------------------------\n"
+        message3 = "Open a File and Select Run Program to get started!\n"
+        message = message + message2 + message3
+        self.pushToOutput(message)
+

@@ -14,34 +14,29 @@ class CPU:
             word = self.memory[self.programCounter]
             opcode = int(word[1:3])
             address = int(word[3:])
-            print(f"{word}, {opcode}, {address}")
             branch = False
 
             match opcode:
                 case 10: #read
                     if not isUserInput: 
                         controller.handleRead()
-                        return "\nPlease enter input: "
+                        return "Please Enter Input and Press Accept\n"
                     self.read(controller, userInput, address)
                     #reset input to None so loop breaks out on subsequent read codes
                     isUserInput = False
                 case 11: #write
-                    print("write")
                     self.write(controller, address)
                 case 20: #load
-                    print("load")
-                    print(self.accumulator)
                     self.load(address)
-                    print(self.accumulator)
                 case 21: #store
-                    print("store")
                     self.store(address)
                 case 30: #Add
-                    print("add")
                     self.add(address)
                 case 31: #subtract
                     self.subtract(address)
                 case 32: #Divide
+                    if int(self.memory[address]) == 0:
+                        return "Error: Division by 0, Program Terminated"
                     self.divide(address)
                 case 33: #multiply
                     self.multiply(address)
@@ -52,9 +47,8 @@ class CPU:
                 case 42: #branchzero
                     branch = self.branchZero()
                 case 43: #halt
-                    print(self.memory)
                     self.programCounter = 0
-                    return "end of program\n"
+                    return "\n--------------\nend of program\n--------------\n"
 
             if branch == True:
                 self.programCounter = address
@@ -116,8 +110,9 @@ class CPU:
             if isNegative == True:
                 self.accumulator * -1
     
-    def resetProgramCounter(self):
+    def reset(self):
         self.programCounter = 0
+        self.memory = []
 
     def formatWord(self, input):
         isPositive = int(input) >= 0
