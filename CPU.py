@@ -12,11 +12,17 @@ class CPU:
         isUserInput = userInput is not None        
         #index self.memory to start at current programCounter
         while True:
-            word = self.memory[self.programCounter]
+
+            if self.programCounter <= 99:
+                word = self.memory[self.programCounter]
+            else:
+                word = "+4300"
+                controller.pushToOutput ("Program Counter Exceeds CPU Memory: forcing HALT")
             opcode = int(word[1:3])
             address = int(word[3:])
             branch = False
             self.totalCommands += 1
+
 
             if self.totalCommands > 1000:
                 controller.pushToOutput("Too many instructions processed (infinite branching?), forcing HALT\n")

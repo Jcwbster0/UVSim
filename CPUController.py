@@ -20,7 +20,6 @@ class CPUController:
     
     def handleRunProgram(self, userInput = None):
         outputMsg = self.cpu.execute(self, userInput = userInput)
-        print(outputMsg)
         if outputMsg is not None:
             self.pushToOutput(outputMsg)
 
