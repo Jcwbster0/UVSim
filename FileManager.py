@@ -1,6 +1,8 @@
 import os
 from tkinter import filedialog, messagebox
 
+VALID_OPCODES = {"10", "11", "20", "21", "30", "31", "32", "33", "40", "41", "42", "43"}
+
 class FileManager:
     
     def __init__(self):
@@ -34,7 +36,12 @@ class FileManager:
                 return 2 
             if line[0] != '+' and line[0] != '-':
                 return 2
-            if "43" in line[1:3]:
+
+            opcode = line[1:3]
+            if opcode not in VALID_OPCODES:
+                return 2
+
+            if opcode == "43":
                 includes_halt = True  
         if includes_halt == False:
             return 1
