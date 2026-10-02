@@ -38,8 +38,8 @@ class FileManager:
                 return 2
 
             opcode = line[1:3]
-            if opcode not in VALID_OPCODES:
-                return 2
+            #if opcode not in VALID_OPCODES:
+                #return 2
 
             if opcode == "43":
                 includes_halt = True  
