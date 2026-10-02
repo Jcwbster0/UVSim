@@ -80,6 +80,7 @@ It safely flags and terminates on the following structural issues:
 * Missing critical HALT (+43XX) instructions required for execution initialization
 * File type mismatch (ensures .txt structure)
 * Accumulator overflow is handled by truncating values above +9999 or below -9999
+* Halts the program if an infinite branching loop is suspected
 
 
 
