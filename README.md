@@ -19,34 +19,8 @@ executing machine language programs written in BasicML.
   instruction occupies exactly one word. Instructions always carry a plus (+) 
   sign, whereas standalone data words can be plus (+) or minus (-).
 
-## PREREQUISITES & COMPILATION
-Included is a compiled executable for unix systems (UVSim) and windows (UVSim.exe)
-
-FOR WINDOWS:
-
-    From the Command Prompt enter the path to the .exe file and press enter, for example:
-    
-    C:\Users\windowsuser>H:\UVSim.exe
-    Enter the name of your input file: H:test_programs\Test1.txt
-    File reading successful!
-    Please enter up to a 4 digit number: 9999
-    Please enter up to a 4 digit number: 9999
-    Content in address 9: +9999
-    Ending Program...
-
-This version of UVSim is built using C++. To compile and execute this project, 
-ensure you have a standard C++ compiler installed on your system.
-
-Recommended Tooling:
-* GCC/G++ compiler (or Clang/MSVC depending on your OS)
-* Terminal or Command Prompt access
-
-How to Compile:
-Open your command line interface, navigate to the source directory, and run 
-the following compilation command:
-
-    g++ -std=c++17 -o UVSim UVSim.cpp
-    clang++ -std=c++17 -o UVSim UVSim.cpp
+## PREREQUISITES
+Python installed on machine along with tkinter
 
 ## HOW TO RUN & USE
 
@@ -57,18 +31,15 @@ the following compilation command:
    instruction (+4300) to terminate safely.
 
 2. Launch the application:
-   Execute the compiled binary from your terminal:
-   
-    ./UVSim
+   Run the main.py file
 
 3. Provide the input file:
-   The application will immediately prompt you: "Enter the name of your input file: "
-   Type the exact name of your text file (e.g., program.txt) and press Enter.
+   The application will immediately prompt you to select a file. Press open file and select a file
 
 4. Run-Time Interaction:
    * READ Operations (+10XX): If your script executes a READ, the simulator 
      will pause and ask you to "Please enter up to a 4 digit number: ". Type 
-     the number and hit Enter.
+     the number and hit Accept Input.
    * WRITE Operations (+11XX): Prints out the exact contents stored at the 
      requested memory register straight to your console screen.
 
@@ -108,7 +79,7 @@ It safely flags and terminates on the following structural issues:
 * Input files exceeding the strict 100-word memory limit
 * Missing critical HALT (+43XX) instructions required for execution initialization
 * File type mismatch (ensures .txt structure)
-* Accumulator overflow is handled by clipping values above +9999 or below -9999
+* Accumulator overflow is handled by truncating values above +9999 or below -9999
 
 
 
