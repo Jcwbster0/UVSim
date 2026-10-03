@@ -145,6 +145,7 @@ class CPU:
     def reset(self):
         self.programCounter = 0
         self.memory = []
+        self.accumulator = 0
 
     def formatWord(self, input):
         isPositive = int(input) >= 0
