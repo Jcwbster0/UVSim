@@ -1,0 +1,3 @@
+primary="#4C721D"
+secondary="#FFFFFF"
+text="#000000"
