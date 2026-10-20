@@ -1,29 +1,49 @@
 import tkinter as tk
 import os
 from tkinter import ttk
+import ColorSettingsWindow
 
 class UserInputFrame(ttk.Frame):
     
-    def __init__(self, parent):
-        super().__init__(parent)
+    def __init__(self, parent, colorConfig):
         self.parent = parent
+        self.colorConfig = colorConfig
+
+        # Color Configuration
+        style = ttk.Style()
+        style.theme_use('clam')
+        style.configure("Custom.TFrame", background=self.colorConfig.getPrimary())
+        style.configure("Custom.TButton", background=self.colorConfig.getSecondary(), foreground=self.colorConfig.getText())
+        style.configure("Custom.TLabel", background=self.colorConfig.getPrimary(), foreground=self.colorConfig.getText())
+
+
+        super().__init__(parent, style = "Custom.TFrame")
 
         self.placeholder = "enter input here..."
 
-        userInputButton = ttk.Button(self, text = "Accept Input", command = self.userInputButtonPressed)
-        openFileButton = ttk.Button(self, text = "Open File",command = self.openFileButtonPressed)
+        userInputButton = ttk.Button(self, text = "Accept Input", command = self.userInputButtonPressed, style = "Custom.TButton")
+        openFileButton = ttk.Button(self, text = "Open File",command = self.openFileButtonPressed, style = "Custom.TButton")
         self.userInputEntry = ttk.Entry(self, foreground="grey")
-        runProgramButton = ttk.Button(self, text = "Run Program", command = self.runProgramButtonPressed)
-        self.currentFileLabel = ttk.Label(self, text = "No File Selected.")
+        runProgramButton = ttk.Button(self, text = "Run Program", command = self.runProgramButtonPressed, style = "Custom.TButton")
+        self.currentFileLabel = ttk.Label(self, text = "No File Selected.", style = "Custom.TLabel")
+        colorSettingsButton = ttk.Button(self, text = "Color Settings", command = self.openColorSettings, style = "Custom.TButton")
 
         self.columnconfigure((0,1,2,3), weight = 1, uniform = 'a')
-        self.rowconfigure((0,1), weight = 1, uniform = 'a')
-         
-        userInputButton.grid(row = 0, column = 3, sticky = 'e')
-        openFileButton.grid(row = 0, column = 0, sticky = 'w')
-        self.userInputEntry.grid(row = 0, column = 1,columnspan = 2, sticky = 'ns')
-        runProgramButton.grid(row = 1, column = 3, sticky = "se")
-        self.currentFileLabel.grid(row = 1, column = 0, columnspan = 3,sticky = "sw")
+        self.rowconfigure((0,1,2), weight = 1, uniform = 'a')
+
+        # File Management
+        openFileButton.grid(row = 0, column = 0, sticky = "e")
+        self.currentFileLabel.grid(row = 0, column = 1)
+        runProgramButton.grid(row = 2, column = 0, sticky = "e")
+
+        # Input Management
+        self.userInputEntry.grid(row = 2, column = 2)
+        userInputButton.grid(row = 2, column = 3, sticky = "w")
+
+        # Color Chooser Button
+        colorSettingsButton.grid(row = 0, column = 3, sticky = "w")
+
+        
         self.pack(pady = (10,0))
         self.userInputEntry.insert(0, self.placeholder)
 
@@ -53,3 +73,8 @@ class UserInputFrame(ttk.Frame):
             userInput = ""
         self.parent.controller.handleUserInput(userInput)
         
+    def openColorSettings(self):
+        ColorSettingsWindow.ColorSettingsWindow(
+            self.parent,
+            self.colorConfig
+        )
