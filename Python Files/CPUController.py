@@ -36,13 +36,13 @@ class CPUController:
                 else:
                     raise ValueError
             except ValueError:
-                self.pushToOutput("Invalid Input: enter an integer between -9999 and 9999.\n")              
+                self.pushToOutput("Invalid Input: enter an integer between -9999 and 9999.\n", msgType = "error")              
             
     def handleRead(self):
         self.requestForInput = True
 
     def handleWrite(self, output):
-        self.pushToOutput(output)
+        self.pushToOutput(output, msgType = "write")
 
     def setupOutput(self, fileOutputFrame):
         self.output = fileOutputFrame
@@ -61,8 +61,13 @@ class CPUController:
         self.setupMemory()
         self.startupMessage()
 
-    def pushToOutput(self, msg):
-        self.output.pushToOutput(msg)
+
+    # Message tags:
+    # - "write": Used for text that is meant to be more noticable such as the contents of the Write opcode
+    # - "system": Used for things like writing opcodes to output. Smaller, less noticable
+    # - "error": Used for error messages that are meant to grab the user's attention
+    def pushToOutput(self, msg, msgType = "write"):
+        self.output.pushToOutput(msg, msgType)
 
     def startupMessage(self):
         message = r"""              __ _

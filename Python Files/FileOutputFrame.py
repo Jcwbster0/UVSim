@@ -1,28 +1,53 @@
 import tkinter as tk
 from tkinter import ttk
 
+# Frame where all the text outputs go
 class FileOutputFrame(ttk.Frame):
-    def __init__(self, parent):
+    def __init__(self, parent, colorConfig):
         super().__init__(parent)
-        self.outputFrame = tk.Text(
-                self, 
-                bg="#1e1e1e",      # Dark background
-                fg="#d4d4d4",      # Default light text
-#insertbackground="white", # Cursor color
-                font=("Courier", 14),      # Monospace font for aligned spacing
-                wrap="word",       # Don't split words mid-line
-                state="disabled"   # Start disabled so user can't manually type over logs
-                )
-        scrollBar = ttk.Scrollbar(self, command = self.outputFrame.yview)
 
+        self.colorConfig = colorConfig
+        self.outputFrame = tk.Text(
+            self, 
+            bg= self.colorConfig.getSecondary(),    # Background Color
+            fg= self.colorConfig.getText(),         # Text Color
+            font=("Courier", 14),                   # Monospace font for aligned spacing
+            wrap="word",                            # Don't split words mid-line
+            state="disabled"                        # Start disabled so user can't manually type over logs
+        )
+
+        self.outputFrame.tag_config(
+            "write",
+            foreground = self.colorConfig.getText(),
+            font = ("Courier", 14)
+        )
+        self.outputFrame.tag_config(
+            "system",
+            foreground = self.colorConfig.getPrimary(),
+            font = ("Courier", 8, "italic")
+        )
+        self.outputFrame.tag_config(
+            "error",
+            foreground = "red",
+            font = ("Courier", 14)
+        )
+        
+        scrollBar = ttk.Scrollbar(self, command = self.outputFrame.yview)
         self.outputFrame.pack(side = "left", fill = "both", expand = True)
         scrollBar.pack(side = "right", fill = "y", expand = True)
         self.pack(fill = "both", expand = True)
         
-    def pushToOutput(self, msg):
-        msg = "\n" + msg
+    def pushToOutput(self, msg, msgType = "system"):
+        
         self.normalState()
-        self.outputFrame.insert(tk.END, msg)
+        if msgType == "system":
+            msg = "\n [CPU] " + msg
+        elif msgType == "error":
+            msg = "\n ERROR: " + msg
+        else:
+            msg = "\n" + msg
+        
+        self.outputFrame.insert(tk.END, msg, msgType)
         self.outputFrame.see(tk.END)
         self.disabledState()
         
