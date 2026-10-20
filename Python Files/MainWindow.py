@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import UserInputFrame
 import FileOutputFrame
+import FileEditorFrame
 
 class MainWindow(tk.Tk):
     
@@ -17,10 +18,10 @@ class MainWindow(tk.Tk):
        #Disable resizing
        self.resizable(False, False)
        #initialize ui widgets here
-        
        self.userInputFrame = UserInputFrame.UserInputFrame(self) 
        self.fileOutputFrame = FileOutputFrame.FileOutputFrame(self)
-       
+       self.fileEditorFrame = FileEditorFrame.FileEditorFrame(self)
+
        self.controller.setup(self.fileOutputFrame)
        
        self.mainloop()
