@@ -24,6 +24,7 @@ class ColorSettingsWindow(tk.Toplevel):
             font = ("Courier", 14, "bold")
         ).pack(pady = 10)
 
+        # All the buttons in the Color Settings window
         ttk.Button(
             self,
             text = "Choose Primary Color",
@@ -54,6 +55,7 @@ class ColorSettingsWindow(tk.Toplevel):
             command = self.applyColors
         ).pack(pady = 10)
 
+    # Code for the color picker
     def chooseColor(self, colorType):
         currentColors = {
             "primary": self.primary,
@@ -75,6 +77,15 @@ class ColorSettingsWindow(tk.Toplevel):
             elif colorType == "text":
                 self.text = color
 
+    # Resets colors back to the default UVU theming
+    def setDefaultColors(self):
+        self.colorConfig.setDefaultColors()
+
+        self.primary = self.colorConfig.getPrimary()
+        self.secondary = self.colorConfig.getSecondary()
+        self.text = self.colorConfig.getText()
+
+    # Changes the colors of the window
     def applyColors(self):
         self.colorConfig.updatePrimary(self.primary)
         self.colorConfig.updateSecondary(self.secondary)
@@ -83,9 +94,3 @@ class ColorSettingsWindow(tk.Toplevel):
         self.parent.applyColors()
         self.destroy()
 
-    def setDefaultColors(self):
-        self.colorConfig.setDefaultColors()
-
-        self.primary = self.colorConfig.getPrimary()
-        self.secondary = self.colorConfig.getSecondary()
-        self.text = self.colorConfig.getText()

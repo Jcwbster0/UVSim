@@ -10,11 +10,13 @@ class ColorController:
         self.secondary = self.config[1]
         self.text = self.config[2]
 
+    # Reset colors back to the default UVU theme
     def setDefaultColors(self):
         self.updatePrimary("#4C721D")
         self.updateSecondary("#FFFFFF")
         self.updateText("#000000")
 
+    # Update colors functions
     def updatePrimary(self, userInput):
         self.primary = userInput
         with open(colorPath, "r") as file:
@@ -45,6 +47,7 @@ class ColorController:
         with open(colorPath, "w") as file:
             file.writelines(data)
 
+    # Get colors functions
     def getPrimary(self):
         return self.primary
 
@@ -54,6 +57,7 @@ class ColorController:
     def getText(self):
         return self.text
 
+    # Strip the ColorSettings.txt file to grab the hex codes
     def readConfigFile(self):
         y = []
         with open (colorPath, "r") as file:
