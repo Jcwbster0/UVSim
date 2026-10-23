@@ -57,7 +57,7 @@ class UserInputFrame(ttk.Frame):
             self,
             text = "Save File",
             command = self.saveFileButtonPressed,
-            style = "custom.TButton"
+            style = "Custom.TButton"
                 )
 
         # User input field
