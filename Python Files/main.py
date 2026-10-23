@@ -1,8 +1,9 @@
-import MainWindow 
+import MainWindow
 import CPU
 import CPUController
 import FileManager
 import ColorController
+
 
 def main():
     cpu = CPU.CPU()
@@ -10,8 +11,8 @@ def main():
     fileManager = FileManager.FileManager()
     controller = CPUController.CPUController(cpu, fileManager)
 
-    window = MainWindow.MainWindow("UVSim", (1000,600), controller, colorConfig)
+    window = MainWindow.MainWindow("UVSim", (1000, 600), controller, colorConfig)
+
 
 if __name__ == "__main__":
     main()
-    
