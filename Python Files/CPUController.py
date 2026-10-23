@@ -24,7 +24,20 @@ class CPUController:
         self.editor.updateMemory(memory)
 
     def handleGetMemory(self):
-        return self.editor.getMemory()
+        newUserFile = self.editor.getMemory()
+        errCode = self.fileManager.validateFile(newUserFile)
+        errString = ""
+        match errCode:
+            case 0:
+                #no errors
+                return newUserFile
+            case 1:
+                errString = "No HALT(43) code"
+            case 2:
+                errString = "Invalid Opcode"
+            case 3:
+                errString = "Memory Exceeded 100 Words"
+        self.pushToOutput(errString, "error")
 
     def handleRunProgram(self, userInput=None):
         if userInput == None:

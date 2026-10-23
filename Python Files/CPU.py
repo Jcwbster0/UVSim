@@ -8,6 +8,9 @@ class CPU:
     def execute(self, controller, userInput=None):
         self.memory = controller.memory
 
+        if self.memory == None:
+            return
+
         isUserInput = userInput is not None
         # index self.memory to start at current programCounter
         while True:
