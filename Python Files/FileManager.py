@@ -46,3 +46,26 @@ class FileManager:
         if includes_halt == False:
             return 1
         return 0 
+
+    def saveFile(self, memory):
+        file_path = filedialog.asksaveasfilename(
+            initialfile="untitled.txt",
+            defaultextension=".txt",
+            filetypes=[
+                ("Text Files", "*.txt"),
+                ("All Files", "*.*")
+            ]
+        )
+        
+        if not file_path:
+            return ("Save operation cancelled by user.", "error")
+            
+        try:
+            with open(file_path, "w", encoding="utf-8") as file:
+                for line in memory:
+                    line = line + "\n"
+                    file.write(line)
+            return (f"File successfully saved to: {os.path.basename(file_path)}", "write")
+        except Exception as e:
+            return (f"An error occurred while saving {e}", "error")
+

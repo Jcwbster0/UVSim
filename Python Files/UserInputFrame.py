@@ -53,6 +53,12 @@ class UserInputFrame(ttk.Frame):
             command = self.openColorSettings, 
             style = "Custom.TButton"
         )
+        saveFileButton = ttk.Button(
+            self,
+            text = "Save File",
+            command = self.saveFileButtonPressed,
+            style = "custom.TButton"
+                )
 
         # User input field
         self.userInputEntry = ttk.Entry(
@@ -66,6 +72,7 @@ class UserInputFrame(ttk.Frame):
 
         # File Management
         openFileButton.grid(row = 0, column = 0, sticky = "ew")
+        saveFileButton.grid(row = 1, column = 0, sticky = "ew")
         self.currentFileLabel.grid(row = 0, column = 1)
         runProgramButton.grid(row = 2, column = 3, sticky = "ew")
 
@@ -111,3 +118,6 @@ class UserInputFrame(ttk.Frame):
             self.parent,
             self.colorConfig
         )
+
+    def saveFileButtonPressed(self):
+        self.parent.controller.handleSaveFile()

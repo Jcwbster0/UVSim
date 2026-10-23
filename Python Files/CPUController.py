@@ -20,6 +20,13 @@ class CPUController:
         self.handleUpdateMemory(self.memory)
         return labelText
 
+    def handleSaveFile(self):
+        memory = self.handleGetMemory()
+        if memory == None:
+            return
+        saveResult, msgType = self.fileManager.saveFile(memory)
+        self.pushToOutput(saveResult, msgType)
+
     def handleUpdateMemory(self, memory):
         self.editor.updateMemory(memory)
 
