@@ -125,6 +125,7 @@ class CPU:
                 case 43:  # halt
                     self.programCounter = 0
                     self.totalCommands = 0
+                    self.accumulator = 0
                     return "\n--------------\nend of program\n--------------\n"
 
             if branch == True:

@@ -27,7 +27,8 @@ class CPUController:
         return self.editor.getMemory()
 
     def handleRunProgram(self, userInput=None):
-        self.memory = self.handleGetMemory()
+        if userInput == None:
+            self.memory = self.handleGetMemory()
         outputMsg = self.cpu.execute(self, userInput=userInput)
         if outputMsg is not None:
             self.pushToOutput(outputMsg)
