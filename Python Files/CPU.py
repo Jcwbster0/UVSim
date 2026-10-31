@@ -14,15 +14,15 @@ class CPU:
         isUserInput = userInput is not None
         # index self.memory to start at current programCounter
         while True:
-            if self.programCounter <= 99:
+            if self.programCounter <= 249:
                 word = self.memory[self.programCounter]
             else:
-                word = "+4300"
+                word = "+043000"
                 controller.pushToOutput(
                     "Program Counter Exceeds CPU Memory: forcing HALT", msgType="error"
                 )
-            opcode = int(word[1:3])
-            address = int(word[3:])
+            opcode = int(word[1:4])
+            address = int(word[4:7])
             branch = False
             self.totalCommands += 1
 
@@ -58,7 +58,7 @@ class CPU:
                     self.load(address)
                 case 21:  # store
                     controller.pushToOutput(
-                        f"Opcode 21: Storing {self.accumulator} in address {address}\n",
+                        f"Opcode 021: Storing {self.accumulator} in address {address}\n",
                         msgType="system",
                     )
                     self.store(address)
@@ -199,17 +199,16 @@ class CPU:
         self.accumulator = 0
 
     def formatWord(self, input):
-        isPositive = int(input) >= 0
-        word = str(abs(int(input)))
+        number = int(input)
+        isPositive = number >= 0
+        word = str(abs(number))
+
+        while len(word) < 6:
+            word = "0" + word
+
         if isPositive:
             word = "+" + word
         else:
             word = "-" + word
-        match len(word):
-            case 2:
-                word = word[:1] + "000" + word[1:]
-            case 3:
-                word = word[:1] + "00" + word[1:]
-            case 4:
-                word = word[:1] + "0" + word[1:]
+
         return word
