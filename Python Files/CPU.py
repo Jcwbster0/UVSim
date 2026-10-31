@@ -187,9 +187,9 @@ class CPU:
         self.accumTruncate()
 
     def accumTruncate(self):
-        if self.accumulator < -9999 or self.accumulator > 9999:
+        if self.accumulator < -999999 or self.accumulator > 999999:
             isNegative = self.accumulator < 0
-            self.accumulator = self.accumulator % 10000
+            self.accumulator = self.accumulator % 1000000
             if isNegative == True:
                 self.accumulator * -1
 

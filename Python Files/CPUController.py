@@ -59,7 +59,7 @@ class CPUController:
         if self.requestForInput == True:
             try:
                 input = int(userInput)
-                if input >= -9999 and input <= 9999:
+                if input >= -999999 and input <= 999999:
                     requestForInput = False
                     self.pushToOutput(f"Input Accepted: {userInput}\n")
 
@@ -69,7 +69,7 @@ class CPUController:
                     raise ValueError
             except ValueError:
                 self.pushToOutput(
-                    "Invalid Input: enter an integer between -9999 and 9999.\n",
+                    "Invalid Input: enter an integer between -999999 and 999999.\n",
                     msgType="error",
                 )
 
