@@ -32,6 +32,7 @@ class CPUController:
 
     def handleGetMemory(self):
         newUserFile = self.editor.getMemory()
+        newUserFile = self.fileManager.convertFile(newUserFile)
         errCode = self.fileManager.validateFile(newUserFile)
         errString = ""
         match errCode:
@@ -43,13 +44,14 @@ class CPUController:
             case 2:
                 errString = "Invalid Opcode"
             case 3:
-                errString = "Memory Exceeded 100 Words"
+                errString = "Memory Exceeded 250 Words"
         self.pushToOutput(errString, "error")
 
     def handleRunProgram(self, userInput=None):
         if userInput == None:
             self.memory = self.handleGetMemory()
         outputMsg = self.cpu.execute(self, userInput=userInput)
+        self.handleUpdateMemory(self.memory)
         if outputMsg is not None:
             self.pushToOutput(outputMsg)
 
@@ -84,8 +86,8 @@ class CPUController:
         self.output = fileOutputFrame
 
     def setupMemory(self):
-        for i in range(100):
-            self.memory.append("+0000")
+        for i in range(250):
+            self.memory.append("+000000")
 
     def resetMemory(self):
         self.cpu.reset()

@@ -22,11 +22,11 @@ class FileEditorFrame(ttk.Frame):
             "<Configure>", lambda e: canvas.itemconfig(frame_window, width=e.width)
         )
 
-        self.placeholder = "+0000"
+        self.placeholder = "+000000"
         self.entryDict = {}
         self.labelDict = {}
         self.addressFrameDict = {}
-        for i in range(100):
+        for i in range(250):
             entryNum = i
             labelText = self.formatMemoryString(i)
             addressFrame = ttk.Frame(scrollable_frame)
