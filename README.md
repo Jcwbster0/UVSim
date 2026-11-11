@@ -1,4 +1,3 @@
-
 # UVSim Simulator : Instruction & Usage Guide
 
 
@@ -9,84 +8,83 @@ executing machine language programs written in BasicML.
 
 ## SYSTEM OVERVIEW
 
-* Memory: Equipped with a 100-word memory layout, referenced via location 
-  numbers 00 through 99.
-* Words: All information is handled in "words." A word is a signed four-digit 
-  decimal number (e.g., +1234, -5678).
+* Memory: Equipped with a 250-word memory layout, referenced via location 
+  numbers 000 through 249.
+* Words: All information is handled in "words." A word can be a signed four-digit or six-digit
+  decimal number. Four-digit words are converted to six-digit numbers to be used by the simulator
 * CPU: A virtual CPU with a program counter (PC) and accumulator (AC).
-* Accumulator: A specialized register used to hold data values during aritmetic and memory operations.
-* Execution: BasicML programs load starting at memory location 00. Each 
+* Accumulator: A specialized register used to hold data values during arithmetic and memory operations.
+* Execution: BasicML programs load starting at memory location 000. Each 
   instruction occupies exactly one word. Instructions always carry a plus (+) 
   sign, whereas standalone data words can be plus (+) or minus (-).
 * Instruction format: Each instruction contains an opcode and memory address.
 * GUI: The interface allows the user to load files, run programs, input codes and change color settings.
-* Memory display: Shows the current state of all 100 memory locations used by the simulator.
+* Memory display: Shows the current state of all 250 memory locations used by the simulator.
 
 ## PREREQUISITES
 * Python installed on machine
-* Ktinker for Python
+* Tkinter for Python
 
 ## HOW TO RUN & USE
 
 1. Prepare your BasicML file: 
-   Create a standard text file (.txt extension required) containing your 
-   BasicML opcodes. Each opcode must be on its own line and follow the signed 
-   five-character format (e.g., +1005). Your program *must* include a HALT 
-   instruction (+4300) to terminate safely.
+   Create a standard text file (`.txt` extension required) containing your 
+   BasicML instructions. Each instruction must be on its own line and follow either the signed 
+   five-character format, such as `+1005`, or the signed seven-character format, such as `+010005`.
+   Five-character words are converted to seven-character words by the simulator. Your program
+   must include a HALT instruction, such as `+4300` or `+043000`, to terminate safely.
 
 2. Launch the application:
-   Run the main.py file
+   Run the `main.py` file.
 
-3. Provide the input file:
-   The application will immediately prompt you to select a file. Press open file and select a file
+3. Open an input file:
+   Click **Open File** and select a `.txt` BasicML file. The selected file is loaded into the
+   memory display starting at memory location `000`.
 
 4. Run the program:
-   The application will immediately begin executing your program.
+   Click **Run Program** to execute the loaded or manually edited program.
 
-5. Run-Time Interaction:
-   * READ Operations (+10XX): If your script executes a READ, the simulator 
-     will pause and ask you to "Please enter up to a 4 digit number: ". Type 
-     the number and hit Accept Input.
-   * WRITE Operations (+11XX): Prints out the exact contents stored at the 
-     requested memory register straight to your console screen.
-   * Update Memory: Allows you to manually edit the value stored in a specific memory location.
-   
+5. Run-time interaction:
+   * READ operations, `+10XX` or `+010XXX`, pause execution and request input through the GUI.
+     Enter an integer from `-999999` to `999999` in the input field, then click **Accept Input**.
+   * WRITE operations, `+11XX` or `+011XXX`, display the contents of the requested memory
+     location in the GUI output display.
+   * Memory can be manually edited in the memory display before running or saving a program.
+
 6. Change color settings:
-   * Change the primary or secondary color of the application by clicking on 
-     the color button.
-   * Change the text color of the application by clicking on the text color 
-     button.
-   * Color changes will persist across sessions or can be reset back to default settings.
+   * Click **Color Settings** to choose custom primary, secondary, and text colors.
+   * Color changes persist across sessions.
+   * Colors can be reset back to the default settings.
    
 ## BASICML VOCABULARY REFERENCE 
 
 An instruction word breaks down into two halves:
-* First 2 Digits: Operation Code (Opcode) 
-* Last 2 Digits: Operand (Target Memory Address)
+* First 2 or 3 Digits: Operation Code (Opcode) 
+* Last 2 or 3 Digits: Operand (Target Memory Address)
 
 ### I/O Operations
-* 10 (READ):   Reads a word from keyboard into a specific memory address.
-* 11 (WRITE):  Outputs a word from a specific memory address to the screen.
+* 10 or 010(READ):   Reads a word from keyboard into a specific memory address.
+* 11 or 011(WRITE):  Outputs a word from a specific memory address to the output display.
 
 ### Load/Store Operations
-* 20 (LOAD):   Loads a word from a memory location directly into the accumulator.
-* 21 (STORE):  Saves the word in the accumulator into a memory location.
+* 20 or 020(LOAD):   Loads a word from a memory location directly into the accumulator.
+* 21 or 021(STORE):  Saves the word in the accumulator into a memory location.
 
 ### Arithmetic Operations
-* 30 (ADD):      Adds memory location word to accumulator word; leaves result 
+* 30 or 030(ADD):      Adds memory location word to accumulator word; leaves result 
                  in accumulator.
-* 31 (SUBTRACT): Subtracts memory location word from accumulator word; leaves 
+* 31 or 031(SUBTRACT): Subtracts memory location word from accumulator word; leaves 
                  result in accumulator.
-* 32 (DIVIDE):   Divides accumulator word by memory location word; leaves 
+* 32 or 032(DIVIDE):   Divides accumulator word by memory location word; leaves 
                  result in accumulator (Includes divide-by-zero protection).
-* 33 (MULTIPLY): Multiplies memory location word by accumulator word; leaves 
+* 33 or 033(MULTIPLY): Multiplies memory location word by accumulator word; leaves 
                  result in accumulator.
 
 ### Control Operations
-* 40 (BRANCH):     Jumps execution directly to a specific memory location.
-* 41 (BRANCHNEG):  Jumps to a specific memory location if accumulator is negative.
-* 42 (BRANCHZERO): Jumps to a specific memory location if accumulator is zero.
-* 43 (HALT):       Terminates program execution safely.
+* 40 or 040(BRANCH):     Jumps execution directly to a specific memory location.
+* 41 or 041(BRANCHNEG):  Jumps to a specific memory location if accumulator is negative.
+* 42 or 042(BRANCHZERO): Jumps to a specific memory location if accumulator is zero.
+* 43 or 043(HALT):       Terminates program execution safely.
 
 ## GUI Features
 * Open file button: Opens a file dialog to select a BASICML file for execution.
@@ -104,12 +102,9 @@ The memory display shows the current state of memory locations. Allows editing o
 
 ## SYSTEM ERROR HANDLING 
 It safely flags and terminates on the following structural issues:
-* Non-integer or improperly formatted opcodes (must match strict 5-character length)
-* Input files exceeding the strict 100-word memory limit
-* Missing critical HALT (+43XX) instructions required for execution initialization
+* Non-integer or improperly formatted opcodes (must match strict 5-character or 7-character length)
+* Input files exceeding the strict 250-word memory limit
+* Missing critical HALT (+43XX) or (+043XXX) instructions required for execution initialization
 * File type mismatch (ensures .txt structure)
-* Accumulator overflow is handled by truncating values above +9999 or below -9999
+* Accumulator overflow is handled by truncating values above +999999 or below -999999
 * Halts the program if an infinite branching loop is suspected
-
-
-
