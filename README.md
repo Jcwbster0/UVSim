@@ -67,24 +67,24 @@ An instruction word breaks down into two halves:
 * 11 or 011(WRITE):  Outputs a word from a specific memory address to the output display.
 
 ### Load/Store Operations
-* 20 or 020(LOAD):   Loads a word from a memory location directly into the accumulator.
-* 21 or 021(STORE):  Saves the word in the accumulator into a memory location.
+* 20 or 020(LOAD): Loads a word from a memory location directly into the accumulator.
+* 21 or 021(STORE): Saves the word in the accumulator into a memory location.
 
 ### Arithmetic Operations
-* 30 or 030(ADD):      Adds memory location word to accumulator word; leaves result 
+* 30 or 030(ADD): Adds memory location word to accumulator word; leaves result 
                  in accumulator.
 * 31 or 031(SUBTRACT): Subtracts memory location word from accumulator word; leaves 
                  result in accumulator.
-* 32 or 032(DIVIDE):   Divides accumulator word by memory location word; leaves 
+* 32 or 032(DIVIDE): Divides accumulator word by memory location word; leaves 
                  result in accumulator (Includes divide-by-zero protection).
 * 33 or 033(MULTIPLY): Multiplies memory location word by accumulator word; leaves 
                  result in accumulator.
 
 ### Control Operations
-* 40 or 040(BRANCH):     Jumps execution directly to a specific memory location.
-* 41 or 041(BRANCHNEG):  Jumps to a specific memory location if accumulator is negative.
+* 40 or 040(BRANCH): Jumps execution directly to a specific memory location.
+* 41 or 041(BRANCHNEG): Jumps to a specific memory location if accumulator is negative.
 * 42 or 042(BRANCHZERO): Jumps to a specific memory location if accumulator is zero.
-* 43 or 043(HALT):       Terminates program execution safely.
+* 43 or 043(HALT): Terminates program execution safely.
 
 ## GUI Features
 * Open file button: Opens a file dialog to select a BASICML file for execution.
