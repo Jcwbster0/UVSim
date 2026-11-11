@@ -1,7 +1,18 @@
 import os
 from tkinter import filedialog, messagebox
 
-VALID_OPCODES = {"10", "11", "20", "21", "30", "31", "32", "33", "40", "41", "42", "43"}
+VALID_OPCODES = {"10", "010",
+                 "11", "011",
+                 "20", "020",
+                 "21", "021",
+                 "30", "030",
+                 "31", "031",
+                 "32", "032",
+                 "33", "030",
+                 "40", "040",
+                 "41", "041",
+                 "42", "042",
+                 "43", "043"}
 
 class FileManager:
     
@@ -15,37 +26,71 @@ class FileManager:
             return (defaultLines,  "Error: .txt file expected")
 
         with open(filePath, "r") as file:
-            lines = [line.rstrip("\n")for line in file.readlines()]
+            lines = [line.rstrip("\n") for line in file.readlines()]
+            lines = self.convertFile(lines)
             errCode = self.validateFile(lines)
             match errCode:
-                case 0: return (lines,os.path.basename(filePath))
-                case 1: return (defaultLines,"Error: no HALT(43) code")
-                case 2: return (defaultLines, "Error: invalid opcode")
-                case 3: return (defaultLines, "Error: memory exceeded 100 words.")
+                case 0:
+                    return (lines, os.path.basename(filePath))
+                case 1:
+                    return (defaultLines, "Error: no HALT(043) code")
+                case 2:
+                    return (defaultLines, "Error: invalid opcode")
+                case 3:
+                    return (defaultLines, "Error: memory exceeded 250 words.")
 
     def promptForFile(self):
        filePath = filedialog.askopenfilename(title="Choose a File", filetypes = [("Text Files", "*.txt")])
        return filePath
-    
+
     def validateFile(self, lines):
         includes_halt = False
-        if len(lines) > 100:
+
+        if len(lines) > 250:
             return 3
+
         for line in lines:
-            if  len(line) != 5: 
-                return 2 
+            if len(line) != 7:
+                return 2
+
             if line[0] != '+' and line[0] != '-':
                 return 2
 
-            opcode = line[1:3]
-            #if opcode not in VALID_OPCODES:
-                #return 2
+            digits = line[1:]
+            if not digits.isdigit():
+                return 2
 
-            if opcode == "43":
-                includes_halt = True  
+            opcode = line[1:4]
+
+            if opcode == "043":
+                includes_halt = True
+
         if includes_halt == False:
             return 1
-        return 0 
+
+        return 0
+
+    def convertFile(self, lines):
+        convertedLines = []
+
+        for line in lines:
+            if len(line) == 5:
+                sign = line[0]
+                digits = line[1:]
+                opcode = line[1:3]
+                address = line[3:5]
+
+                if opcode in VALID_OPCODES:
+                    opcode = "0" + opcode
+                    address = "0" + address
+                    convertedLines.append(sign + opcode + address)
+                else:
+                    digits = "00" + digits
+                    convertedLines.append(sign + digits)
+            else:
+                convertedLines.append(line)
+
+        return convertedLines
 
     def saveFile(self, memory):
         file_path = filedialog.asksaveasfilename(
