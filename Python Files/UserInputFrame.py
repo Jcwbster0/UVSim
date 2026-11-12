@@ -16,6 +16,7 @@ class UserInputFrame(ttk.Frame):
         style.configure("Custom.TButton", background=self.colorConfig.getSecondary(), foreground=self.colorConfig.getText())
         style.configure("Custom.TLabel", background=self.colorConfig.getPrimary(), foreground=self.colorConfig.getText())
         style.configure("Custom.TEntry", fieldbackground=self.colorConfig.getSecondary(), foreground=self.colorConfig.getText())
+        style.configure("Placeholder.TEntry", fieldbackground=self.colorConfig.getSecondary(), foreground="grey")
 
         super().__init__(parent, style = "Custom.TFrame")
 
@@ -93,12 +94,12 @@ class UserInputFrame(ttk.Frame):
     def clearPlaceholder(self, event):
         if self.userInputEntry.get() == self.placeholder:
             self.userInputEntry.delete(0, tk.END)
-            self.userInputEntry.config(foreground=self.colorConfig.getText())
+            self.userInputEntry.config(style="Custom.TEntry")
 
     def restorePlaceholder(self, event):
         if self.userInputEntry.get() == "":
             self.userInputEntry.insert(0, self.placeholder)
-            self.userInputEntry.config(foreground="grey")
+            self.userInputEntry.config(style="Placeholder.TEntry")
     
     def openFileButtonPressed(self):
         labelText = self.parent.controller.handleOpenFile()
