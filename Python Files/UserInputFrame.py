@@ -61,6 +61,13 @@ class UserInputFrame(ttk.Frame):
             style = "Custom.TButton"
                 )
 
+        newFileTabButton = ttk.Button(
+            self,
+            text = "Open New Tab",
+            command = self.newFileTabButtonPressed,
+            style = "Custom.TButton"
+        )
+
         # User input field
         self.userInputEntry = ttk.Entry(
             self, 
@@ -75,7 +82,8 @@ class UserInputFrame(ttk.Frame):
         openFileButton.grid(row = 0, column = 0, sticky = "ew")
         saveFileButton.grid(row = 1, column = 0, sticky = "ew")
         self.currentFileLabel.grid(row = 0, column = 1)
-        runProgramButton.grid(row = 2, column = 3, sticky = "ew")
+        runProgramButton.grid(row = 1, column = 3, sticky = "ew")
+        newFileTabButton.grid(row = 2, column = 3, sticky = "ew")
 
         # Input Management
         self.userInputEntry.grid(row = 2, column = 0)
@@ -100,6 +108,10 @@ class UserInputFrame(ttk.Frame):
         if self.userInputEntry.get() == "":
             self.userInputEntry.insert(0, self.placeholder)
             self.userInputEntry.config(style="Placeholder.TEntry")
+
+    def newFileTabButtonPressed(self):
+        self.parent.controller.handleNewTab()
+        return
     
     def openFileButtonPressed(self):
         labelText = self.parent.controller.handleOpenFile()

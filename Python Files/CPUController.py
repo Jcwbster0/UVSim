@@ -19,13 +19,15 @@ class CPUController:
         self.resetMemory()
         self.memory = lines + self.memory[length:]
         self.handleUpdateMemory(self.memory)
+        self.editor.updateTabTitle(labelText)
         return labelText
 
     def handleSaveFile(self):
         memory = self.handleGetMemory()
         if memory == None:
             return
-        saveResult, msgType = self.fileManager.saveFile(memory)
+        saveResult, msgType, fileText = self.fileManager.saveFile(memory)
+        self.editor.updateTabTitle(fileText)
         self.pushToOutput(saveResult, msgType)
 
     def handleUpdateMemory(self, memory):
@@ -55,6 +57,9 @@ class CPUController:
         self.handleUpdateMemory(self.memory)
         if outputMsg is not None:
             self.pushToOutput(outputMsg)
+
+    def handleNewTab(self):
+        self.editor.newTab()
 
     def handleUserInput(self, userInput):
         if self.requestForInput == True:

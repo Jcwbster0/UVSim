@@ -37,10 +37,6 @@ class CPU:
 
             match opcode:
                 case 10:  # read
-                    print(self.programCounter)
-                    print(self.memory[7])
-                    print(controller.memory[7])
-
                     if not isUserInput:
                         controller.pushToOutput(
                             "Opcode 10: Reading input", msgType="system"

@@ -110,7 +110,7 @@ class FileManager:
                 for line in memory:
                     line = line + "\n"
                     file.write(line)
-            return (f"File successfully saved to: {os.path.basename(file_path)}", "write")
+            return (f"File successfully saved to: {os.path.basename(file_path)}", "write", os.path.basename(file_path))
         except Exception as e:
-            return (f"An error occurred while saving {e}", "error")
+            return (f"An error occurred while saving {e}", "error", e)
 
