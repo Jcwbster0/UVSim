@@ -45,6 +45,11 @@ class MainWindow(tk.Tk):
             background=self.colorConfig.getPrimary(),
             foreground=self.colorConfig.getText(),
         )
+        style.configure(
+            "Custom.TEntry",
+            fieldbackground=self.colorConfig.getSecondary(),
+            foreground=self.colorConfig.getText()
+        )
 
         output = self.fileOutputFrame.outputFrame
 

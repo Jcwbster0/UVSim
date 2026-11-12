@@ -15,7 +15,7 @@ class UserInputFrame(ttk.Frame):
         style.configure("Custom.TFrame", background=self.colorConfig.getPrimary())
         style.configure("Custom.TButton", background=self.colorConfig.getSecondary(), foreground=self.colorConfig.getText())
         style.configure("Custom.TLabel", background=self.colorConfig.getPrimary(), foreground=self.colorConfig.getText())
-
+        style.configure("Custom.TEntry", fieldbackground=self.colorConfig.getSecondary(), foreground=self.colorConfig.getText())
 
         super().__init__(parent, style = "Custom.TFrame")
 
@@ -63,7 +63,7 @@ class UserInputFrame(ttk.Frame):
         # User input field
         self.userInputEntry = ttk.Entry(
             self, 
-            foreground="grey"
+            style = "Custom.TEntry"
         )
 
 
@@ -93,7 +93,7 @@ class UserInputFrame(ttk.Frame):
     def clearPlaceholder(self, event):
         if self.userInputEntry.get() == self.placeholder:
             self.userInputEntry.delete(0, tk.END)
-            self.userInputEntry.config(foreground="black")
+            self.userInputEntry.config(foreground=self.colorConfig.getText())
 
     def restorePlaceholder(self, event):
         if self.userInputEntry.get() == "":
