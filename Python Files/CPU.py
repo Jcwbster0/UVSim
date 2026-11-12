@@ -6,10 +6,12 @@ class CPU:
         self.totalCommands = 0
 
     def execute(self, controller, userInput=None):
-        self.memory = controller.memory
-
-        if self.memory == None:
+        if controller.memory == None:
             return
+
+        if userInput == None:
+            self.memory = controller.memory.copy()
+
 
         isUserInput = userInput is not None
         # index self.memory to start at current programCounter
@@ -35,6 +37,10 @@ class CPU:
 
             match opcode:
                 case 10:  # read
+                    print(self.programCounter)
+                    print(self.memory[7])
+                    print(controller.memory[7])
+
                     if not isUserInput:
                         controller.pushToOutput(
                             "Opcode 10: Reading input", msgType="system"
@@ -140,7 +146,7 @@ class CPU:
 
         # io functions, etc
 
-    def read(self, controller, input, address):
+    def read(self,controller, input, address):
         word = self.formatWord(input)
         self.memory[address] = word
 

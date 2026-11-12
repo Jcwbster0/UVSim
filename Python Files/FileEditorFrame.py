@@ -7,7 +7,7 @@ class FileEditorFrame(ttk.Frame):
     def __init__(self, parent, colorConfig):
         super().__init__(parent)
         # Create the ttk.Notebook
-        self.textWidgets = []
+        self.frameDict = {}
         self.style = ttk.Style()
         self.notebook = ttk.Notebook(parent)
         self.notebook.pack(expand=True, fill="both")
@@ -24,37 +24,34 @@ class FileEditorFrame(ttk.Frame):
         self.style.configure("TNotebook.Tab", background=primaryColor, foreground=textColor)
         self.style.map("TNotebook.Tab", background=[("selected", secondaryColor)])
         # Apply to every open Text widget
-        for text in self.textWidgets:
+        for text in self.frameDict.values():
             text.configure(background=secondaryColor, foreground=textColor, insertbackground = textColor)
 
     def newTab(self, title="Untitled"):
         frame = ttk.Frame(self.notebook) 
         self.notebook.add(frame, text=title)
-        textWidget = tk.Text(frame, wrap="word", undo=True)
+        textWidget = tk.Text(frame, wrap="word", undo=True, font=("Courier", 14))
 
         textWidget.pack(side="left", expand=True, fill="both")
 
         # Select the newly created tab
         self.notebook.select(frame)
-        self.textWidgets.append(textWidget)
+        self.frameDict[str(frame)] = textWidget
         return textWidget
 
-    def formatMemoryString(self, i):
-        if i < 10:
-            return f"x0{i}"
-        else:
-            return f"x{i}"
+    def parseFile(self,fileString):
+        return [line.strip() for line in fileString.splitlines()]
 
     def getMemory(self):
-        memory = []
-        for key in self.entryDict.keys():
-            entry = self.entryDict[key]
-            string = entry.get()
-            memory.append(string)
-        return memory
+        frameId = self.notebook.select()
+        selectedFrame = self.frameDict.get(frameId)
+        if selectedFrame:
+            fileString = selectedFrame.get("1.0", "end-1c")
+            memory = self.parseFile(fileString)
+            return memory
 
     def updateMemory(self, memory):
-        for key in self.entryDict.keys():
-            entry = self.entryDict[key]
-            entry.delete(0, tk.END)
-            entry.insert(0, memory[key])
+        frame = self.frameDict[self.notebook.select()]
+        frame.delete("1.0", "end")
+        frame.insert("end", "\n".join(memory))
+        

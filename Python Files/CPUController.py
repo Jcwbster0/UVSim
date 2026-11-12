@@ -11,6 +11,7 @@ class CPUController:
         self.memory = []
         self.currentInput = ""
         self.requestForInput = False
+        self.openedfiles = 0
 
     def handleOpenFile(self):
         lines, labelText = self.fileManager.openFile()
