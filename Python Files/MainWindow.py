@@ -23,7 +23,7 @@ class MainWindow(tk.Tk):
 
         self.userInputFrame = UserInputFrame.UserInputFrame(self, self.colorConfig)
         self.fileOutputFrame = FileOutputFrame.FileOutputFrame(self, self.colorConfig)
-        self.fileEditorFrame = FileEditorFrame.FileEditorFrame(self)
+        self.fileEditorFrame = FileEditorFrame.FileEditorFrame(self, self.colorConfig)
 
         self.controller.setup(self.fileOutputFrame, self.fileEditorFrame)
 
@@ -51,6 +51,14 @@ class MainWindow(tk.Tk):
         output.configure(
             bg=self.colorConfig.getSecondary(), fg=self.colorConfig.getText()
         )
+
+        editor = self.fileEditorFrame
+        editor.updateColors(
+                self.colorConfig.getPrimary(),
+                self.colorConfig.getSecondary(),
+                self.colorConfig.getText()
+        )
+
 
         output.tag_config("write", foreground=self.colorConfig.getText())
 

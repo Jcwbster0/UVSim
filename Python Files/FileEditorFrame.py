@@ -4,50 +4,40 @@ from tkinter import ttk
 
 
 class FileEditorFrame(ttk.Frame):
-    def __init__(self, parent):
+    def __init__(self, parent, colorConfig):
         super().__init__(parent)
-        self.parent = parent
+        # Create the ttk.Notebook
+        self.textWidgets = []
+        self.style = ttk.Style()
+        self.notebook = ttk.Notebook(parent)
+        self.notebook.pack(expand=True, fill="both")
+        
+        primaryColor = colorConfig.getPrimary()
+        secondaryColor = colorConfig.getSecondary()
+        textColor = colorConfig.getText()
+        # Add a default open tab
+        self.newTab()
+        self.updateColors(primaryColor, secondaryColor, textColor)
 
-        canvas = tk.Canvas(self, borderwidth=0, highlightthickness=0)
-        scrollBar = ttk.Scrollbar(self, command=canvas.yview)
-        canvas.configure(yscrollcomman=scrollBar.set)
-        scrollable_frame = ttk.Frame(canvas)
-        frame_window = canvas.create_window(
-            (0, 0), window=scrollable_frame, anchor="nw"
-        )
-        scrollable_frame.bind(
-            "<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
-        )
-        canvas.bind(
-            "<Configure>", lambda e: canvas.itemconfig(frame_window, width=e.width)
-        )
+    def updateColors(self, primaryColor, secondaryColor, textColor):
+        self.style.configure("TNotebook", background=primaryColor)
+        self.style.configure("TNotebook.Tab", background=primaryColor, foreground=textColor)
+        self.style.map("TNotebook.Tab", background=[("selected", secondaryColor)])
+        # Apply to every open Text widget
+        for text in self.textWidgets:
+            text.configure(background=secondaryColor, foreground=textColor, insertbackground = textColor)
 
-        self.placeholder = "+000000"
-        self.entryDict = {}
-        self.labelDict = {}
-        self.addressFrameDict = {}
-        for i in range(250):
-            entryNum = i
-            labelText = self.formatMemoryString(i)
-            addressFrame = ttk.Frame(scrollable_frame)
-            entry = ttk.Entry(addressFrame, foreground="grey")
-            entry.insert(0, self.placeholder)
-            label = ttk.Label(addressFrame, text=labelText)
+    def newTab(self, title="Untitled"):
+        frame = ttk.Frame(self.notebook) 
+        self.notebook.add(frame, text=title)
+        textWidget = tk.Text(frame, wrap="word", undo=True)
 
-            self.addressFrameDict[entryNum] = addressFrame
-            self.entryDict[entryNum] = entry
-            self.labelDict[entryNum] = label
+        textWidget.pack(side="left", expand=True, fill="both")
 
-            for key in self.entryDict.keys():
-                entry = self.entryDict[key]
-                label = self.labelDict[key]
-                addressFrame = self.addressFrameDict[key]
-                label.pack(side="left", expand=True)
-                entry.pack(side="left", expand=True)
-                addressFrame.pack(anchor="center", expand=True)
-        scrollBar.pack(side="right", fill="y")
-        canvas.pack(side="left", fill="both", expand=True)
-        self.pack(side="left", fill="both", expand=False)
+        # Select the newly created tab
+        self.notebook.select(frame)
+        self.textWidgets.append(textWidget)
+        return textWidget
 
     def formatMemoryString(self, i):
         if i < 10:
