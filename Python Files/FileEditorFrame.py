@@ -57,6 +57,8 @@ class FileEditorFrame(ttk.Frame):
             return memory
 
     def updateMemory(self, memory):
+        if memory == None:
+            return
         frame = self.frameDict[self.notebook.select()]
         frame.delete("1.0", "end")
         frame.insert("end", "\n".join(memory))

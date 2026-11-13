@@ -31,13 +31,13 @@ class FileManager:
             errCode = self.validateFile(lines)
             match errCode:
                 case 0:
-                    return (lines, os.path.basename(filePath))
+                    return (lines, os.path.basename(filePath), os.path.basename(filePath))
                 case 1:
-                    return (defaultLines, "Error: no HALT(043) code")
+                    return (lines, "Error: no HALT(043) code", os.path.basename(filePath))
                 case 2:
-                    return (defaultLines, "Error: invalid opcode")
+                    return (lines, "Error: invalid opcode", os.path.basename(filePath))
                 case 3:
-                    return (defaultLines, "Error: memory exceeded 250 words.")
+                    return (lines, "Error: memory exceeded 250 words.", os.path.basename(filePath))
 
     def promptForFile(self):
        filePath = filedialog.askopenfilename(title="Choose a File", filetypes = [("Text Files", "*.txt")])
@@ -103,7 +103,7 @@ class FileManager:
         )
         
         if not file_path:
-            return ("Save operation cancelled by user.", "error")
+            return ("Save operation cancelled by user.", "error", os.path.basename(file_path))
             
         try:
             with open(file_path, "w", encoding="utf-8") as file:
@@ -112,5 +112,5 @@ class FileManager:
                     file.write(line)
             return (f"File successfully saved to: {os.path.basename(file_path)}", "write", os.path.basename(file_path))
         except Exception as e:
-            return (f"An error occurred while saving {e}", "error", e)
+            return (f"An error occurred while saving {e}", "error", os.path.basename(file_path))
 

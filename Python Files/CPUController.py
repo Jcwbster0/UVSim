@@ -14,16 +14,16 @@ class CPUController:
         self.openedfiles = 0
 
     def handleOpenFile(self):
-        lines, labelText = self.fileManager.openFile()
+        lines, labelText, filePath = self.fileManager.openFile()
         length = len(lines)
         self.resetMemory()
         self.memory = lines + self.memory[length:]
         self.handleUpdateMemory(self.memory)
-        self.editor.updateTabTitle(labelText)
+        self.editor.updateTabTitle(filePath)
         return labelText
 
     def handleSaveFile(self):
-        memory = self.handleGetMemory()
+        memory = self.editor.getMemory()
         if memory == None:
             return
         saveResult, msgType, fileText = self.fileManager.saveFile(memory)
