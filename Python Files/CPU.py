@@ -191,7 +191,7 @@ class CPU:
     def accumTruncate(self):
         if self.accumulator < -999999 or self.accumulator > 999999:
             isNegative = self.accumulator < 0
-            self.accumulator = self.accumulator % 1000000
+            self.accumulator = int(str(self.accumulator)[:6])
             if isNegative == True:
                 self.accumulator * -1
 
