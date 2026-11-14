@@ -119,7 +119,7 @@ class UserInputFrame(ttk.Frame):
     
     def openFileButtonPressed(self):
         labelText = self.parent.controller.handleOpenFile()
-        self.currentFileLabel.config(text = f"{labelText}")
+    #    self.currentFileLabel.config(text = f"{labelText}")
 
     def runProgramButtonPressed(self):
         self.parent.controller.handleRunProgram()
