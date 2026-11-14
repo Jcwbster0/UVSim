@@ -40,6 +40,11 @@ class FileEditorFrame(ttk.Frame):
         self.updateColors(self.primaryColor, self.secondaryColor, self.textColor)
         return textWidget
 
+    def deleteTab(self):
+        currentTab = self.notebook.select()
+        if currentTab:
+            self.notebook.forget(currentTab)
+
     def updateTabTitle(self, title):
         selectedTab = self.notebook.select()
         if selectedTab:

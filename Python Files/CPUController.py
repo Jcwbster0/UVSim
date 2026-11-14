@@ -61,6 +61,9 @@ class CPUController:
     def handleNewTab(self):
         self.editor.newTab()
 
+    def handleDeleteTab(self):
+        self.editor.deleteTab()
+
     def handleUserInput(self, userInput):
         if self.requestForInput == True:
             try:

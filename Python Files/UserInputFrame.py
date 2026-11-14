@@ -22,13 +22,6 @@ class UserInputFrame(ttk.Frame):
 
         self.placeholder = "enter input here..."
 
-        # Text for displaying current file status
-        self.currentFileLabel = ttk.Label(
-            self, 
-            text = "No File Selected.", 
-            style = "Custom.TLabel"
-        )
-
         # All the buttons
         userInputButton = ttk.Button(
             self, 
@@ -68,6 +61,13 @@ class UserInputFrame(ttk.Frame):
             style = "Custom.TButton"
         )
 
+        deleteFileTabButton = ttk.Button(
+            self,
+            text = "Delete Tab",
+            command = self.deleteFileTabButtonPressed,
+            style = "Custom.TButton"
+        )
+
         # User input field
         self.userInputEntry = ttk.Entry(
             self, 
@@ -75,22 +75,23 @@ class UserInputFrame(ttk.Frame):
         )
 
 
-        self.columnconfigure((0,1,2,3), weight = 1, uniform = 'a')
-        self.rowconfigure((0,1,2), weight = 1, uniform = 'a')
+        self.columnconfigure((0,1,2,3,4), weight = 1, uniform = 'a')
+        self.rowconfigure((0,1), weight = 1, uniform = 'a')
 
         # File Management
-        openFileButton.grid(row = 0, column = 0, sticky = "ew")
-        saveFileButton.grid(row = 1, column = 0, sticky = "ew")
-        self.currentFileLabel.grid(row = 0, column = 1)
-        runProgramButton.grid(row = 1, column = 3, sticky = "ew")
-        newFileTabButton.grid(row = 2, column = 3, sticky = "ew")
+        pad = 5
+        openFileButton.grid(row = 0, column = 0, sticky = "ew", padx = pad, pady = pad)
+        saveFileButton.grid(row = 0, column = 3, sticky = "ew", padx = pad, pady = pad)
+        runProgramButton.grid(row = 0, column = 1, sticky = "ew", padx = pad, pady = pad)
+        newFileTabButton.grid(row = 1, column = 3, sticky = "ew", padx = pad, pady = pad)
+        deleteFileTabButton.grid(row = 1, column = 4, sticky = "ew", padx = pad, pady = pad)
 
         # Input Management
-        self.userInputEntry.grid(row = 2, column = 0)
-        userInputButton.grid(row = 2, column = 1, sticky = "ew")
+        self.userInputEntry.grid(row = 1, column = 0, padx = pad, pady = pad)
+        userInputButton.grid(row = 1, column = 1, sticky = "ew", padx = pad, pady = pad)
 
         # Color Chooser Button
-        colorSettingsButton.grid(row = 0, column = 3, sticky = "ew")
+        colorSettingsButton.grid(row = 0, column = 4, sticky = "ew", padx = pad, pady = pad)
 
         
         self.pack(pady = (10,0))
@@ -112,6 +113,9 @@ class UserInputFrame(ttk.Frame):
     def newFileTabButtonPressed(self):
         self.parent.controller.handleNewTab()
         return
+
+    def deleteFileTabButtonPressed(self):
+        self.parent.controller.handleDeleteTab()
     
     def openFileButtonPressed(self):
         labelText = self.parent.controller.handleOpenFile()
