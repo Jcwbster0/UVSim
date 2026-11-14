@@ -19,7 +19,7 @@ executing machine language programs written in BasicML.
   sign, whereas standalone data words can be plus (+) or minus (-).
 * Instruction format: Each instruction contains an opcode and memory address.
 * GUI: The interface allows the user to load files, run programs, input codes and change color settings.
-* Memory display: Shows the current state of all 250 memory locations used by the simulator.
+* File Editor: Shows the current open file used by the simulator.
 
 ## PREREQUISITES
 * Python installed on machine
@@ -38,8 +38,7 @@ executing machine language programs written in BasicML.
    Run the `main.py` file.
 
 3. Open an input file:
-   Click **Open File** and select a `.txt` BasicML file. The selected file is loaded into the
-   memory display starting at memory location `000`.
+   Click **Open File** and select a `.txt` BasicML file. The selected file is loaded into the file editor.
 
 4. Run the program:
    Click **Run Program** to execute the loaded or manually edited program.
@@ -95,10 +94,11 @@ An instruction word breaks down into two halves:
 * Color Settings button: Opens a color selection dialog.
 * Custon colors: Allows users to select custom primary, secondary, and text colors.
 * Reset Colors button: Resets the colors to default settings.
-* Memory display: Shows the current state of memory locations.
+* File Editor: Shows the current open file.
 
-## MEMORY DISPLAY
-The memory display shows the current state of memory locations. Allows editing of memory values.
+## File Editor
+The File Editor shows the current open file. Allows editing of .txt files for program execution.
+Open New Tab button opens new tabs, and to delete tabs press the Delete Tab button. 
 
 ## SYSTEM ERROR HANDLING 
 It safely flags and terminates on the following structural issues:
